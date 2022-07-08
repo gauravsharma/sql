@@ -32,3 +32,50 @@ left join salaries ms on employees.emp_no = ms.emp_no
 where salaries.to_date = '9999-01-01'
 and salaries.salary > ms.salary 
 ;
+
+select
+*,
+    max(salary) over (partition by salaries.emp_no) as current_salary
+,    LAG(salaries.salary) over(partition by salaries.emp_no
+order by
+    salaries.to_date) as previous_salary
+from
+    salaries;
+
+-- approach 1, using self join
+select t1.A, t1.B, t2.A, t2.B from number_pairs t1 left join number_pairs t2 on t1.B = t2.A and t1.A = t2.B where t2.A is null or t1.A < t2.A;
+
+-- approach 2 using exists or not exists
+select * from number_pairs t1 where not exists (select * from number_pairs t2 where t1.B = t2.A and t1.A = t2.B and t1.A < t2.A);
+
+-- approach 3 , using login of sorting or deriving a common key
+
+
+
+-- find customer who have placed more orders
+WITH total_orders(CUST_CODE,
+total_orders_per_customer) AS (
+	SELECT
+		CUST_CODE,
+		count(*) AS total_orders_per_customer
+	FROM
+		orders
+	GROUP BY
+		CUST_CODE
+),
+avg_orders(avg_orders) AS (
+SELECT
+	AVG(total_orders_per_customer) as avg_orders
+from
+	total_orders
+)
+select
+	*
+from
+	total_orders
+join avg_orders on
+	total_orders.total_orders_per_customer > avg_orders.avg_orders
+
+
+
+

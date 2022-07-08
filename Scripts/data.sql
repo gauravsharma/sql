@@ -308,3 +308,12 @@ INSERT INTO `studentreport` (`CLASS`, `SECTION`, `ROLLID`, `GRADE`, `SEMISTER`, 
 ('V    ', 'B', '15', 'AA   ', '1St  ', '85'),
 ('VI   ', 'A', '2', 'A+   ', '1St  ', '70'),
 ('V    ', 'A', '15', 'AA   ', '2Nd  ', '85');
+
+
+create table number_pairs(A int, B int);
+insert into number_pairs values(1,2);
+insert into number_pairs values(3,2);
+insert into number_pairs values(2,4);
+insert into number_pairs values(2,1);
+insert into number_pairs values(5,6);
+insert into number_pairs values(4,2);
